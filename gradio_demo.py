@@ -92,5 +92,5 @@ with gr.Blocks() as demo:
         outputs=[image_output_component, text_output_component]
     )
 
-# demo.launch(debug=False, show_error=True, share=True)
-demo.launch(share=True, server_port=7861, server_name='0.0.0.0')
+demo.launch(debug=False, show_error=True, share=False)
+# demo.launch(share=True, server_port=7861, server_name='0.0.0.0')

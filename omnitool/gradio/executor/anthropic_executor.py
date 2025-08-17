@@ -39,7 +39,7 @@ class AnthropicExecutor:
         
         tool_result_content: list[BetaToolResultBlockParam] = []
         for content_block in cast(list[BetaContentBlock], response.content):
-            self.output_callback(content_block, sender="bot")
+            self.output_callback(content_block)#, sender="bot")
             # Execute the tool
             if content_block.type == "tool_use":
                 # Run the asynchronous tool execution in a synchronous context
@@ -48,7 +48,7 @@ class AnthropicExecutor:
                     tool_input=cast(dict[str, Any], content_block.input),
                 ))
                 
-                self.output_callback(result, sender="bot")
+                self.output_callback(result)#, sender="bot")
                 
                 tool_result_content.append(
                     _make_api_tool_result(result, content_block.id)

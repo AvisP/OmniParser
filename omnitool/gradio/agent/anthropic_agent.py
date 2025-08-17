@@ -26,10 +26,10 @@ from anthropic.types.beta import BetaMessage, BetaTextBlock, BetaToolUseBlock
 
 from tools import ComputerTool, ToolCollection, ToolResult
 
-from PIL import Image
-from io import BytesIO
-import gradio as gr
-from typing import Dict
+# from PIL import Image
+# from io import BytesIO
+# import gradio as gr
+# from typing import Dict
 
 BETA_FLAG = "computer-use-2024-10-22"
 

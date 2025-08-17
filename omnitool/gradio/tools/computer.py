@@ -11,7 +11,7 @@ from .base import BaseAnthropicTool, ToolError, ToolResult
 from .screen_capture import get_screenshot
 import requests
 import re
-
+import pyautogui
 OUTPUT_DIR = "./tmp/outputs"
 
 TYPING_DELAY_MS = 12
@@ -236,18 +236,19 @@ class ComputerTool(BaseAnthropicTool):
 
         try:
             print(f"sending to vm: {command_list}")
-            response = requests.post(
-                f"http://localhost:5000/execute", 
-                headers={'Content-Type': 'application/json'},
-                json={"command": command_list},
-                timeout=90
-            )
+            # response = requests.post(
+            #     f"http://localhost:5000/execute", 
+            #     headers={'Content-Type': 'application/json'},
+            #     json={"command": command_list},
+            #     timeout=90
+            # )
+            result = eval(action)
             time.sleep(0.7) # avoid async error as actions take time to complete
             print(f"action executed")
-            if response.status_code != 200:
-                raise ToolError(f"Failed to execute command. Status code: {response.status_code}")
+            # if response.status_code != 200:
+            #     raise ToolError(f"Failed to execute command. Status code: {response.status_code}")
             if parse:
-                output = response.json()['output'].strip()
+                output = result#response.json()['output'].strip()
                 match = re.search(r'Point\(x=(\d+),\s*y=(\d+)\)', output)
                 if not match:
                     raise ToolError(f"Could not parse coordinates from output: {output}")
@@ -310,16 +311,16 @@ class ComputerTool(BaseAnthropicTool):
     def get_screen_size(self):
         """Return width and height of the screen"""
         try:
-            response = requests.post(
-                f"http://localhost:5000/execute",
-                headers={'Content-Type': 'application/json'},
-                json={"command": ["python", "-c", "import pyautogui; print(pyautogui.size())"]},
-                timeout=90
-            )
-            if response.status_code != 200:
-                raise ToolError(f"Failed to get screen size. Status code: {response.status_code}")
+            # response = requests.post(
+            #     f"http://localhost:5000/execute",
+            #     headers={'Content-Type': 'application/json'},
+            #     json={"command": ["python", "-c", "import pyautogui; print(pyautogui.size())"]},
+            #     timeout=90
+            # )
+            # if response.status_code != 200:
+            #     raise ToolError(f"Failed to get screen size. Status code: {response.status_code}")
             
-            output = response.json()['output'].strip()
+            output = str(pyautogui.size())#response.json()['output'].strip()
             match = re.search(r'Size\(width=(\d+),\s*height=(\d+)\)', output)
             if not match:
                 raise ToolError(f"Could not parse screen size from output: {output}")

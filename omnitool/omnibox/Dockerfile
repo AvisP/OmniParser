@@ -1,7 +1,7 @@
 ARG VERSION_ARG="latest"
 FROM scratch AS build-amd64
 
-COPY --from=qemux/qemu-docker:6.08 / /
+COPY --from=swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/qemux/qemu-docker:6.08 / /
 
 ARG DEBCONF_NOWARNINGS="yes"
 ARG DEBIAN_FRONTEND="noninteractive"
@@ -14,7 +14,7 @@ RUN set -eu && \
         jq \
         curl \
         7zip \
-        wsdd \
+        wsdd2 \
         samba \
         xz-utils \
         wimtools \

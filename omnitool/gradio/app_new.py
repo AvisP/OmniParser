@@ -43,7 +43,7 @@ INTRO_TEXT = '''
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Gradio App")
-    parser.add_argument("--windows_host_url", type=str, default='localhost:8006')
+    parser.add_argument("--windows_host_url", type=str, default=None) #localhost:8006
     parser.add_argument("--omniparser_server_url", type=str, default="localhost:8000")
     parser.add_argument("--run_folder", type=str, default="./tmp/outputs")
     return parser.parse_args()
@@ -223,7 +223,7 @@ def valid_params(user_input, state):
     """Validate all requirements and return a list of error messages."""
     errors = []
     
-    for server_name, url in [('Windows Host', 'localhost:5000'), ('OmniParser Server', args.omniparser_server_url)]:
+    for server_name, url in [('Omniserver Host', 'localhost:8000'), ('OmniParser Server', args.omniparser_server_url)]:
         try:
             url = f'http://{url}/probe'
             response = requests.get(url, timeout=3)
@@ -603,18 +603,33 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
             stop_button = gr.Button(value="Stop", variant="secondary", elem_classes="secondary-button")
 
     with gr.Row():
-        with gr.Column(scale=2):
-            chatbot = gr.Chatbot(
-                label="Chatbot History", 
-                autoscroll=True, 
-                height=580,
-                avatar_images=("👤", "🤖")
-            )
-        with gr.Column(scale=3):
-            display_area = gr.HTML(
-                get_file_viewer_html(),
-                elem_classes="no-padding"
-            )
+        if args.windows_host_url:
+            with gr.Column(scale=2):
+                chatbot = gr.Chatbot(
+                    label="Chatbot History", 
+                    autoscroll=True, 
+                    height=580,
+                    avatar_images=("👤", "🤖")
+                )
+            with gr.Column(scale=3):
+                display_area = gr.HTML(
+                    get_file_viewer_html(),
+                    elem_classes="no-padding"
+                )
+        else:
+            with gr.Column(scale=2):
+                chatbot = gr.Chatbot(
+                    label="Chatbot History", 
+                    autoscroll=True, 
+                    height=580,
+                    avatar_images=("👤", "🤖")
+                )
+            with gr.Column(scale=1):
+                    display_area = gr.HTML(
+                        "<div>No host URL provided.</div>",
+                        elem_classes="no-padding"
+                    )
+
 
     def update_model(model_selection, state):
         state["model"] = model_selection

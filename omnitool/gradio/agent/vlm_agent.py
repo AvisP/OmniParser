@@ -71,7 +71,7 @@ class VLMAgent:
         self.step_count += 1
         image_base64 = parsed_screen['original_screenshot_base64']
         latency_omniparser = parsed_screen['latency']
-        self.output_callback(f'-- Step {self.step_count}: --', sender="bot")
+        self.output_callback(f'-- Step {self.step_count}: --')#, sender="bot")
         screen_info = str(parsed_screen['screen_info'])
         screenshot_uuid = parsed_screen['screenshot_uuid']
         screen_width, screen_height = parsed_screen['width'], parsed_screen['height']
@@ -136,7 +136,7 @@ class VLMAgent:
         else:
             raise ValueError(f"Model {self.model} not supported")
         latency_vlm = time.time() - start
-        self.output_callback(f"LLM: {latency_vlm:.2f}s, OmniParser: {latency_omniparser:.2f}s", sender="bot")
+        self.output_callback(f"LLM: {latency_vlm:.2f}s, OmniParser: {latency_omniparser:.2f}s")#, sender="bot")
 
         print(f"{vlm_response}")
         
@@ -166,14 +166,13 @@ class VLMAgent:
             except:
                 print(f"Error parsing: {vlm_response_json}")
                 pass
-        self.output_callback(f'<img src="data:image/png;base64,{img_to_show_base64}">', sender="bot")
+        self.output_callback(f'<img src="data:image/png;base64,{img_to_show_base64}">')#, sender="bot")
         self.output_callback(
                     f'<details>'
-                    f'  <summary>Parsed Screen elemetns by OmniParser</summary>'
+                    f'  <summary>Parsed Screen elements by OmniParser</summary>'
                     f'  <pre>{screen_info}</pre>'
-                    f'</details>',
-                    sender="bot"
-                )
+                    f'</details>')#,
+                    #sender="bot")
         vlm_plan_str = ""
         for key, value in vlm_response_json.items():
             if key == "Reasoning":
