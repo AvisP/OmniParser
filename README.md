@@ -1,8 +1,5 @@
 # OmniParser: Screen Parsing tool for Pure Vision Based GUI Agent
 
-<p align="center">
-  <img src="imgs/logo.png" alt="Logo">
-</p>
 <!-- <a href="https://trendshift.io/repositories/12975" target="_blank"><img src="https://trendshift.io/api/badge/repositories/12975" alt="microsoft%2FOmniParser | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a> -->
 
 [![arXiv](https://img.shields.io/badge/Paper-green)](https://arxiv.org/abs/2408.00203)
@@ -15,6 +12,10 @@
 The original repo had lots of issues with docker container that had the target windows OS, but in this example it can directly capture form the OS where it is running and process request
 
 - Directly works on the OS, no need for docker
+
+
+https://github.com/user-attachments/assets/6fdde836-7586-41eb-8806-f52377433c73
+
 
   To Do
   - [] Add Support for communicating with local models (ollama/custom)
